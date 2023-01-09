@@ -1,0 +1,83 @@
+/*Kostas Ragauskas, 3 kursas, 2 grupe, variantai: 1, 20, 32, 43*/
+
+/*Papildomi faktai*/
+sporto_saka(krepsinis).
+sporto_saka(futbolas).
+sporto_saka(tenisas).
+
+/*Seimos medis*/
+asmuo(julius, vyras, 70, -).
+asmuo(milda, moteris, 67, -).
+pora(julius, milda).
+
+asmuo(jurgita, moteris, 43, -).
+asmuo(arunas, vyras, 47, tenisas).
+pora(arunas, jurgita).
+mama(milda, jurgita).
+
+asmuo(laura, moteris, 40, -).
+asmuo(eugenijus, vyras, 42, futbolas).
+pora(eugenijus, laura).
+mama(milda, laura).
+
+asmuo(stanislovas, vyras, 69, krepsinis).
+asmuo(leonida, moteris, 62, -).
+pora(stanislovas, leonida).
+mama(leonida, arunas).
+
+asmuo(martynas, vyras, 13, futbolas).
+asmuo(dominykas, vyras, 12, -).
+mama(laura, martynas).
+mama(laura, dominykas).
+
+asmuo(dziugas, vyras, 16, tenisas).
+asmuo(kostas, vyras, 21, -).
+mama(jurgita, dziugas).
+mama(jurgita, kostas).
+
+/*Uzklausu pavyzdziai:
+ * tevas(julius, jurgita).    (Ats: TRUE)
+ * tevas(julius, arunas).     (Ats: FALSE)
+ *
+ * anyta(leonida, jurgita).   (Ats: TRUE)
+ * anyta(milda, jurgita).     (Ats: FALSE)
+ *
+ * sv_suk(julius).            (Ats: TRUE)
+ * sv_suk(milda).             (Ats: FALSE)
+ *
+ * dar_pagyvens(stanislovas). (Ats: TRUE)
+ * dar_pagyvens(martynas).    (Ats: TRUE)
+ * dar_pagyvens(milda).       (Ats: FALSE)
+ *
+ * anyta(X, jurgita).         (Ats: leonida)
+ */
+
+/*1*/
+tevas(Tevas, Vaikas) :-
+    mama(Mama, Vaikas),
+    pora(Tevas, Mama).
+
+
+/*20*/
+anyta(Anyta, Marti) :-
+    pora(Vyras, Marti),
+    mama(Anyta, Vyras).
+
+
+/*32*/
+kartotinis(Skaicius, Kartotinumas) :-
+    Skaicius mod Kartotinumas =:= 0.
+
+sv_suk(Jubilijatas) :-
+    asmuo(Jubilijatas, _Lytis, Amzius, _Pomegis),
+    kartotinis(Amzius, 10).
+
+
+/*43*/
+nepensinio_amziaus(Lytis, Amzius) :-
+    (Lytis = vyras, Amzius < 64);
+    (Lytis = moteris, Amzius < 63).
+
+dar_pagyvens(Asmuo) :-
+    asmuo(Asmuo, Lytis, Amzius, Pomegis),
+    (sporto_saka(Pomegis); nepensinio_amziaus(Lytis, Amzius)).
